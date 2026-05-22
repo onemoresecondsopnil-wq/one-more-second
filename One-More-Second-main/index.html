@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>One More Second | Luxury Watches</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --teal: #163f3d;
+      --teal-dark: #0e2d2b;
+      --cream: #fff3d8;
+      --cream-soft: #f7e6c3;
+      --gold: #d4af37;
+      --gold-dark: #9a7a22;
+      --white: #ffffff;
+      --shadow: 0 24px 80px rgba(14, 45, 43, 0.18);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "Inter", sans-serif;
+      background: var(--cream);
+      color: var(--teal);
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; display: block; }
+    button, input, textarea, select { font-family: inherit; }
+    button { cursor: pointer; }
+
+    .serif { font-family: "Cormorant Garamond", serif; }
+    .container { width: min(1180px, calc(100% - 40px)); margin: 0 auto; }
+    .eyebrow {
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 0.36em;
+      font-size: 0.78rem;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+    .btn {
+      border: none;
+      border-radius: 999px;
+      padding: 15px 28px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.78rem;
+      font-weight: 800;
+      transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .btn:hover { transform: translateY(-3px); }
+    .btn-gold { background: var(--gold); color: var(--teal); }
+    .btn-teal { background: var(--teal); color: var(--cream); }
+    .btn-teal:hover { background: var(--gold); color: var(--teal); }
+    .btn-outline { background: transparent; color: var(--cream); border: 1px solid rgba(255, 243, 216, 0.35); }
+    .btn-outline:hover { color: var(--gold); border-color: var(--gold); }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      background: rgba(22, 63, 61, 0.92);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(255, 243, 216, 0.14);
+    }
+    .nav {
+      height: 86px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      color: var(--cream);
+      text-decoration: none;
+    }
+    .brand img {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid rgba(212, 175, 55, 0.55);
+    }
+    .brand-title {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1.25rem;
+      letter-spacing: 0.14em;
+      font-weight: 700;
+    }
+    .brand-subtitle {
+      color: var(--gold);
+      font-size: 0.68rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 34px;
+      align-items: center;
+    }
+    .nav-links a {
+      color: var(--cream);
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.78rem;
+      transition: color 0.25s ease;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-actions { display: flex; align-items: center; gap: 12px; }
+    .menu-toggle { display: none; background: none; border: none; color: var(--cream); font-size: 1.7rem; }
+
+    .hero {
+      min-height: 100vh;
+      padding: 150px 0 80px;
+      position: relative;
+      color: var(--cream);
+      background: linear-gradient(135deg, rgba(22,63,61,0.98), rgba(22,63,61,0.9), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&fit=crop&w=2200&q=90');
+      background-size: cover;
+      background-position: center;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 520px;
+      height: 520px;
+      border: 1px solid rgba(212, 175, 55, 0.28);
+      border-radius: 50%;
+      right: -120px;
+      top: 120px;
+      animation: float 8s ease-in-out infinite;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 460px;
+      height: 460px;
+      background: rgba(255, 243, 216, 0.08);
+      filter: blur(70px);
+      border-radius: 50%;
+      left: -120px;
+      bottom: -160px;
+    }
+    .hero-grid {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 70px;
+      align-items: center;
+    }
+    .hero h1 {
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(4rem, 8vw, 8.6rem);
+      line-height: 0.9;
+      letter-spacing: -0.04em;
+      max-width: 780px;
+    }
+    .hero p {
+      color: rgba(255, 243, 216, 0.78);
+      font-size: 1.1rem;
+      line-height: 1.8;
+      max-width: 570px;
+      margin: 28px 0 38px;
+    }
+    .hero-buttons { display: flex; flex-wrap: wrap; gap: 16px; }
+    .hero-card {
+      position: relative;
+      border: 1px solid rgba(212, 175, 55, 0.38);
+      border-radius: 34px;
+      background: rgba(255, 243, 216, 0.1);
+      backdrop-filter: blur(12px);
+      padding: 28px;
+      box-shadow: 0 35px 100px rgba(0,0,0,0.25);
+      animation: riseIn 1s ease forwards;
+    }
+    .hero-card img {
+      border-radius: 50%;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.34);
+    }
+
+    section { padding: 100px 0; }
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 24px;
+      margin-bottom: 52px;
+    }
+    .section-head h2, .center-head h2 {
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(3rem, 5vw, 5.8rem);
+      line-height: 0.96;
+      letter-spacing: -0.03em;
+    }
+    .center-head { text-align: center; margin-bottom: 52px; }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+    .product-card {
+      background: var(--white);
+      border: 1px solid rgba(22, 63, 61, 0.1);
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+    }
+    .product-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 34px 90px rgba(14, 45, 43, 0.25);
+    }
+    .product-image {
+      position: relative;
+      aspect-ratio: 4 / 5;
+      overflow: hidden;
+      background: var(--teal);
+    }
+    .product-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s ease;
+    }
+    .product-card:hover .product-image img { transform: scale(1.1); }
+    .tag {
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      background: var(--cream);
+      color: var(--teal);
+      border-radius: 999px;
+      padding: 9px 14px;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-weight: 800;
+    }
+    .product-content { padding: 24px; }
+    .product-title-row { display: flex; justify-content: space-between; gap: 18px; align-items: start; }
+    .product-content h3 {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1.75rem;
+      line-height: 1;
+    }
+    .price { color: var(--gold-dark); font-weight: 800; white-space: nowrap; }
+    .product-content p {
+      margin: 14px 0 22px;
+      color: rgba(22, 63, 61, 0.68);
+      line-height: 1.65;
+      font-size: 0.92rem;
+    }
+    .card-actions { display: flex; gap: 10px; }
+    .card-actions .btn { flex: 1; padding: 13px 14px; font-size: 0.7rem; }
+
+    .story-section { background: var(--teal); color: var(--cream); }
+    .story-grid {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 70px;
+      align-items: center;
+    }
+    .story-image { position: relative; }
+    .story-image > img {
+      border-radius: 34px;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      box-shadow: 0 35px 100px rgba(0,0,0,0.28);
+    }
+    .estd-badge {
+      position: absolute;
+      right: -24px;
+      bottom: -28px;
+      background: var(--cream);
+      color: var(--teal);
+      border: 1px solid rgba(212,175,55,0.5);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+    .estd-badge strong {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 2.8rem;
+      line-height: 1;
+      display: block;
+    }
+    .story-copy h2 {
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(3rem, 5vw, 5.8rem);
+      line-height: 0.98;
+      letter-spacing: -0.03em;
+    }
+    .story-copy p {
+      color: rgba(255,243,216,0.76);
+      font-size: 1.05rem;
+      line-height: 1.85;
+      margin-top: 24px;
+    }
+    .feature-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 34px;
+    }
+    .feature {
+      border: 1px solid rgba(255,243,216,0.14);
+      background: rgba(255,243,216,0.06);
+      border-radius: 22px;
+      padding: 22px;
+    }
+    .feature span { color: var(--gold); font-size: 1.6rem; }
+    .feature h4 { font-family: "Cormorant Garamond", serif; font-size: 1.45rem; margin-top: 12px; }
+
+    .testimonials {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .testimonial {
+      background: var(--white);
+      border: 1px solid rgba(22,63,61,0.1);
+      border-radius: 28px;
+      padding: 30px;
+      box-shadow: var(--shadow);
+      transition: transform 0.35s ease;
+    }
+    .testimonial:hover { transform: translateY(-8px); }
+    .stars { color: var(--gold); letter-spacing: 0.12em; margin-bottom: 20px; }
+    .testimonial blockquote {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1.9rem;
+      line-height: 1.15;
+    }
+    .person { margin-top: 26px; padding-top: 20px; border-top: 1px solid rgba(22,63,61,0.1); }
+    .person strong { display: block; }
+    .person small { color: var(--gold-dark); text-transform: uppercase; letter-spacing: 0.18em; font-weight: 800; }
+
+    .newsletter { background: var(--teal); color: var(--cream); }
+    .newsletter-box {
+      border: 1px solid rgba(212,175,55,0.3);
+      background: rgba(255,243,216,0.07);
+      border-radius: 36px;
+      padding: 56px;
+      text-align: center;
+      box-shadow: 0 35px 100px rgba(0,0,0,0.18);
+    }
+    .newsletter-box h2 {
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(3rem, 5vw, 5.6rem);
+      line-height: 0.95;
+    }
+    .newsletter-box p {
+      color: rgba(255,243,216,0.72);
+      margin: 20px auto 34px;
+      max-width: 620px;
+      line-height: 1.7;
+    }
+    .newsletter-form {
+      display: flex;
+      gap: 12px;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    .newsletter-form input {
+      flex: 1;
+      border: 1px solid rgba(255,243,216,0.2);
+      border-radius: 999px;
+      padding: 0 24px;
+      min-height: 58px;
+      outline: none;
+      background: var(--cream);
+      color: var(--teal);
+    }
+
+    .shop-hero, .page-hero {
+      padding: 150px 0 70px;
+      background: var(--teal);
+      color: var(--cream);
+    }
+    .shop-hero h1, .page-hero h1 {
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(4rem, 7vw, 7.5rem);
+      line-height: 0.92;
+    }
+    .shop-hero p, .page-hero p {
+      color: rgba(255,243,216,0.75);
+      max-width: 680px;
+      margin-top: 24px;
+      line-height: 1.8;
+      font-size: 1.08rem;
+    }
+    .filters {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      background: var(--white);
+      padding: 22px;
+      border: 1px solid rgba(22,63,61,0.1);
+      border-radius: 26px;
+      box-shadow: var(--shadow);
+      margin-bottom: 42px;
+    }
+    .filters label {
+      display: block;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.72rem;
+      font-weight: 800;
+    }
+    .filters select {
+      margin-top: 10px;
+      width: 100%;
+      border: 1px solid rgba(22,63,61,0.14);
+      border-radius: 999px;
+      background: var(--cream);
+      color: var(--teal);
+      padding: 14px 18px;
+      outline: none;
+    }
+
+    .product-detail {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 70px;
+      align-items: start;
+    }
+    .main-product-img {
+      border-radius: 34px;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      box-shadow: var(--shadow);
+    }
+    .thumbs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 14px; }
+    .thumbs img { aspect-ratio: 1; object-fit: cover; border-radius: 18px; }
+    .product-info { position: sticky; top: 120px; }
+    .product-info h1 {
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(3.5rem, 6vw, 7rem);
+      line-height: 0.9;
+      letter-spacing: -0.04em;
+    }
+    .product-info .big-price { color: var(--gold-dark); font-size: 2rem; font-weight: 800; margin: 26px 0; }
+    .product-info p { color: rgba(22,63,61,0.72); line-height: 1.85; font-size: 1.05rem; }
+    .detail-actions { display: flex; gap: 14px; flex-wrap: wrap; margin: 34px 0; }
+    .specs { background: var(--white); border-radius: 26px; padding: 24px; box-shadow: var(--shadow); }
+    .spec {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 18px 0;
+      border-bottom: 1px solid rgba(22,63,61,0.1);
+    }
+    .spec:last-child { border-bottom: none; }
+    .spec strong { text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.76rem; }
+    .spec span { color: rgba(22,63,61,0.68); text-align: right; }
+
+    .about-grid, .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 70px;
+      align-items: center;
+    }
+    .about-grid h2, .contact-grid h1 {
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(3.4rem, 5vw, 6.2rem);
+      line-height: 0.95;
+    }
+    .about-grid p, .contact-grid p { color: rgba(22,63,61,0.72); line-height: 1.85; margin-top: 22px; }
+    .about-grid img { border-radius: 34px; aspect-ratio: 4 / 5; object-fit: cover; box-shadow: var(--shadow); }
+    .contact-card {
+      background: var(--teal);
+      color: var(--cream);
+      border-radius: 26px;
+      padding: 28px;
+      margin-top: 34px;
+    }
+    .contact-card strong { font-family: "Cormorant Garamond", serif; font-size: 1.8rem; display: block; margin-top: 10px; }
+    form.contact-form {
+      background: var(--white);
+      border-radius: 34px;
+      padding: 38px;
+      box-shadow: var(--shadow);
+    }
+    .form-field { margin-bottom: 20px; }
+    .form-field label {
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.72rem;
+      font-weight: 800;
+      display: block;
+      margin-bottom: 10px;
+    }
+    .form-field input, .form-field textarea {
+      width: 100%;
+      border: 1px solid rgba(22,63,61,0.14);
+      background: var(--cream);
+      color: var(--teal);
+      border-radius: 18px;
+      padding: 16px 18px;
+      outline: none;
+      font-size: 1rem;
+    }
+    .form-field textarea { min-height: 150px; resize: vertical; }
+
+    footer {
+      background: var(--teal-dark);
+      color: var(--cream);
+      padding: 54px 0 28px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr 0.8fr;
+      gap: 40px;
+    }
+    .footer-title { color: var(--gold); text-transform: uppercase; letter-spacing: 0.2em; font-size: 0.8rem; font-weight: 800; margin-bottom: 18px; }
+    footer a { color: rgba(255,243,216,0.75); text-decoration: none; display: block; margin-bottom: 10px; }
+    footer a:hover { color: var(--gold); }
+    .socials { display: flex; gap: 10px; }
+    .socials a {
+      width: 42px;
+      height: 42px;
+      border: 1px solid rgba(255,243,216,0.2);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      margin: 0;
+    }
+    .copyright {
+      border-top: 1px solid rgba(255,243,216,0.1);
+      margin-top: 38px;
+      padding-top: 22px;
+      color: rgba(255,243,216,0.5);
+      font-size: 0.9rem;
+    }
+
+    .page { display: none; }
+    .page.active { display: block; }
+    .fade-in { opacity: 0; transform: translateY(28px); animation: fadeIn 0.8s ease forwards; }
+
+    @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
+    @keyframes riseIn { from { opacity: 0; transform: scale(0.92); } to { opacity: 1; transform: scale(1); } }
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(22px); } }
+
+    @media (max-width: 1050px) {
+      .product-grid { grid-template-columns: repeat(2, 1fr); }
+      .hero-grid, .story-grid, .product-detail, .about-grid, .contact-grid { grid-template-columns: 1fr; }
+      .product-info { position: static; }
+    }
+    @media (max-width: 780px) {
+      .nav { height: 78px; }
+      .nav-links, .nav-actions { display: none; }
+      .menu-toggle { display: block; }
+      .nav.mobile-open .nav-links {
+        display: flex;
+        position: absolute;
+        top: 78px;
+        left: 0;
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+        background: var(--teal);
+        padding: 24px 20px;
+        border-top: 1px solid rgba(255,243,216,0.12);
+      }
+      .hero { padding-top: 120px; }
+      .hero h1 { font-size: 4rem; }
+      .section-head { display: block; }
+      .section-head .btn { margin-top: 24px; }
+      .product-grid, .testimonials, .feature-row, .filters, .footer-grid { grid-template-columns: 1fr; }
+      .newsletter-form { flex-direction: column; }
+      .newsletter-box { padding: 36px 22px; }
+      .brand-title { font-size: 1rem; }
+      .brand-subtitle { font-size: 0.58rem; }
+      .brand img { width: 46px; height: 46px; }
+      .estd-badge { right: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav" id="nav">
+      <a class="brand" href="#" onclick="showPage('home')">
+        <img src="/mnt/data/One More Second.png" alt="One More Second logo">
+        <div>
+          <div class="brand-title">ONE MORE SECOND</div>
+          <div class="brand-subtitle">Time, Redefined.</div>
+        </div>
+      </a>
+      <nav class="nav-links">
+        <a href="#" onclick="showPage('home')">Home</a>
+        <a href="#" onclick="showPage('shop')">Shop</a>
+        <a href="#" onclick="showPage('about')">About</a>
+        <a href="#" onclick="showPage('contact')">Contact</a>
+      </nav>
+      <div class="nav-actions">
+        <button class="btn btn-outline" onclick="alert('Cart preview')">Cart</button>
+        <button class="btn btn-gold" onclick="showPage('shop')">Shop Now</button>
+      </div>
+      <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+    </div>
+  </header>
+
+  <main id="home" class="page active">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="fade-in">
+          <div class="eyebrow">Luxury Watches • Estd 2026</div>
+          <h1>Timeless Elegance On Your Wrist</h1>
+          <p>Created for those who see time as more than a measure. One More Second crafts modern heirlooms with quiet power, precision, and grace.</p>
+          <div class="hero-buttons">
+            <button class="btn btn-gold" onclick="showPage('shop')">Shop Now →</button>
+            <button class="btn btn-outline" onclick="showPage('about')">Our Story</button>
+          </div>
+        </div>
+        <div class="hero-card">
+          <img src="/mnt/data/One More Second.png" alt="One More Second brand emblem">
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Featured Collection</div>
+            <h2>Crafted to endure.</h2>
+          </div>
+          <button class="btn btn-teal" onclick="showPage('shop')">View Shop →</button>
+        </div>
+        <div class="product-grid" id="featuredProducts"></div>
+      </div>
+    </section>
+
+    <section class="story-section">
+      <div class="container story-grid">
+        <div class="story-image fade-in">
+          <img src="https://images.unsplash.com/photo-1604242692760-2f7b0c26856d?auto=format&fit=crop&w=1200&q=85" alt="Watch craftsmanship">
+          <div class="estd-badge"><strong>2026</strong><small>Established</small></div>
+        </div>
+        <div class="story-copy fade-in">
+          <div class="eyebrow">The Brand Story</div>
+          <h2>One more second. One lasting impression.</h2>
+          <p>We believe luxury lives in restraint. In the polish of a case. In the quiet sweep of a hand. In the final second before a moment becomes memory.</p>
+          <p>Every One More Second watch is designed with deep teal confidence, warm cream clarity, and a muted gold signature. Modern, elegant, and made to be remembered.</p>
+          <div class="feature-row">
+            <div class="feature"><span>⌚</span><h4>Swiss Precision</h4></div>
+            <div class="feature"><span>◆</span><h4>Premium Materials</h4></div>
+            <div class="feature"><span>✦</span><h4>Built to Endure</h4></div>
+          </div>
+          <br><br>
+          <button class="btn btn-gold" onclick="showPage('about')">Discover More</button>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="center-head">
+          <div class="eyebrow">Client Words</div>
+          <h2>Admired in silence.</h2>
+        </div>
+        <div class="testimonials">
+          <div class="testimonial"><div class="stars">★★★★★</div><blockquote>“Quiet luxury at its finest. The finishing feels personal, precise, and rare.”</blockquote><div class="person"><strong>Adrian Vale</strong><small>Collector</small></div></div>
+          <div class="testimonial"><div class="stars">★★★★★</div><blockquote>“A watch that does not shout. It speaks with confidence.”</blockquote><div class="person"><strong>Mira Stone</strong><small>Creative Director</small></div></div>
+          <div class="testimonial"><div class="stars">★★★★★</div><blockquote>“The teal and gold palette is unforgettable. Elegant from every angle.”</blockquote><div class="person"><strong>Julian Crest</strong><small>Entrepreneur</small></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="newsletter">
+      <div class="container">
+        <div class="newsletter-box">
+          <div class="eyebrow">Private List</div>
+          <h2>Enter the inner circle.</h2>
+          <p>Receive early access to limited releases, private appointments, and stories from the atelier.</p>
+          <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Thank you for subscribing.')">
+            <input type="email" placeholder="Your email address" required>
+            <button class="btn btn-gold">Subscribe</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <main id="shop" class="page">
+    <section class="shop-hero">
+      <div class="container">
+        <div class="eyebrow">Shop Watches</div>
+        <h1>Precision, presented.</h1>
+        <p>Choose the timepiece that speaks softly and stays forever.</p>
+      </div>
+    </section>
+    <section>
+      <div class="container">
+        <div class="filters">
+          <label>Price
+            <select id="priceFilter" onchange="renderShop()">
+              <option value="All">All Prices</option>
+              <option value="under-4000">Under $4,000</option>
+              <option value="4000-6000">$4,000–$6,000</option>
+              <option value="6000+">$6,000+</option>
+            </select>
+          </label>
+          <label>Style
+            <select id="styleFilter" onchange="renderShop()">
+              <option value="All">All Styles</option>
+              <option value="Dress">Dress</option>
+              <option value="Chronograph">Chronograph</option>
+              <option value="Classic">Classic</option>
+            </select>
+          </label>
+          <label>Strap Type
+            <select id="strapFilter" onchange="renderShop()">
+              <option value="All">All Straps</option>
+              <option value="Leather">Leather</option>
+              <option value="Metal">Metal</option>
+            </select>
+          </label>
+        </div>
+        <div class="product-grid" id="shopProducts"></div>
+      </div>
+    </section>
+  </main>
+
+  <main id="product" class="page">
+    <section class="product-section" style="padding-top: 140px;">
+      <div class="container product-detail">
+        <div>
+          <img id="productMainImage" class="main-product-img" src="" alt="Selected watch">
+          <div class="thumbs">
+            <img id="thumbOne" src="" alt="Watch detail">
+            <img src="https://images.unsplash.com/photo-1612817159949-195b6eb9e31a?auto=format&fit=crop&w=700&q=85" alt="Watch detail">
+            <img src="https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=700&q=85" alt="Watch detail">
+          </div>
+        </div>
+        <div class="product-info">
+          <div class="eyebrow" id="productStyle"></div>
+          <h1 id="productName"></h1>
+          <div class="big-price" id="productPrice"></div>
+          <p id="productDescription"></p>
+          <div class="detail-actions">
+            <button class="btn btn-teal">Add to Cart</button>
+            <button class="btn" style="border: 1px solid rgba(22,63,61,0.22); color: var(--teal); background: transparent;">Buy Now</button>
+          </div>
+          <div class="specs" id="productSpecs"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <main id="about" class="page">
+    <section class="page-hero">
+      <div class="container" style="text-align:center; max-width: 980px;">
+        <div class="eyebrow">About One More Second</div>
+        <h1>Time is emotional. Craft is eternal.</h1>
+        <p style="margin-left:auto; margin-right:auto;">One More Second was born from a simple belief: the most meaningful moments deserve to be held a little longer.</p>
+      </div>
+    </section>
+    <section>
+      <div class="container about-grid">
+        <div>
+          <div class="eyebrow">Our Philosophy</div>
+          <h2>Designed with restraint. Finished with obsession.</h2>
+          <p>Our watches are not made to follow trends. They are made to accompany rituals, decisions, travels, and celebrations. Each detail is considered. Each material earns its place.</p>
+          <p>Deep teal represents depth. Warm cream brings clarity. Muted gold leaves a signature of quiet prestige.</p>
+        </div>
+        <img src="https://images.unsplash.com/photo-1495704907664-81f74a7efd9b?auto=format&fit=crop&w=1200&q=85" alt="Luxury watch maker">
+      </div>
+    </section>
+  </main>
+
+  <main id="contact" class="page">
+    <section style="padding-top: 150px;">
+      <div class="container contact-grid">
+        <div>
+          <div class="eyebrow">Contact</div>
+          <h1>Begin a private conversation.</h1>
+          <p>For appointments, collection enquiries, or concierge support, leave a message. We reply with care.</p>
+          <div class="contact-card">
+            <span>✉</span>
+            <strong>concierge@onemoresecond.com</strong>
+            <p style="color:rgba(255,243,216,0.65); margin-top: 6px;">Available Monday–Friday</p>
+          </div>
+        </div>
+        <form class="contact-form" onsubmit="event.preventDefault(); alert('Your message has been sent.')">
+          <div class="form-field"><label>Name</label><input placeholder="Your name" required></div>
+          <div class="form-field"><label>Email</label><input type="email" placeholder="you@example.com" required></div>
+          <div class="form-field"><label>Message</label><textarea placeholder="How can we help?" required></textarea></div>
+          <button class="btn btn-teal" style="width: 100%;">Send Message</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <a class="brand" href="#" onclick="showPage('home')">
+          <img src="/mnt/data/One More Second.png" alt="One More Second logo">
+          <div>
+            <div class="brand-title">ONE MORE SECOND</div>
+            <div class="brand-subtitle">Time, Redefined.</div>
+          </div>
+        </a>
+        <p style="color: rgba(255,243,216,0.65); max-width: 440px; margin-top: 18px; line-height: 1.7;">Luxury watches crafted for presence, precision, and timeless design.</p>
+      </div>
+      <div>
+        <div class="footer-title">Explore</div>
+        <a href="#" onclick="showPage('home')">Home</a>
+        <a href="#" onclick="showPage('shop')">Shop</a>
+        <a href="#" onclick="showPage('about')">About</a>
+        <a href="#" onclick="showPage('contact')">Contact</a>
+      </div>
+      <div>
+        <div class="footer-title">Social</div>
+        <div class="socials">
+          <a href="#">IG</a><a href="#">FB</a><a href="#">X</a>
+        </div>
+      </div>
+    </div>
+    <div class="container copyright">© 2026 One More Second. All rights reserved.</div>
+  </footer>
+
+  <script>
+    const products = [
+      {
+        id: 1,
+        name: "Eclipse Teal Automatic",
+        price: "$4,850",
+        style: "Dress",
+        strap: "Leather",
+        range: "4000-6000",
+        image: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&fit=crop&w=1200&q=85",
+        description: "A refined automatic timepiece with a deep teal dial, polished gold accents, and hand-finished leather strap.",
+        materials: "316L stainless steel, sapphire crystal, calf leather",
+        movement: "Swiss automatic movement",
+        water: "50m water resistance"
+      },
+      {
+        id: 2,
+        name: "Heritage Gold Chrono",
+        price: "$7,200",
+        style: "Chronograph",
+        strap: "Metal",
+        range: "6000+",
+        image: "https://images.unsplash.com/photo-1548171915-e79a380a2a4b?auto=format&fit=crop&w=1200&q=85",
+        description: "A confident chronograph built for collectors who value precision, balance, and timeless presence.",
+        materials: "Brushed steel, muted gold bezel, sapphire crystal",
+        movement: "Automatic chronograph calibre",
+        water: "100m water resistance"
+      },
+      {
+        id: 3,
+        name: "Midnight Reserve",
+        price: "$5,650",
+        style: "Classic",
+        strap: "Leather",
+        range: "4000-6000",
+        image: "https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?auto=format&fit=crop&w=1200&q=85",
+        description: "Minimal, poised, and quietly powerful. Designed for evenings that deserve one more second.",
+        materials: "Polished steel, anti-reflective sapphire, premium leather",
+        movement: "Swiss automatic movement",
+        water: "50m water resistance"
+      },
+      {
+        id: 4,
+        name: "Signature Cream Dial",
+        price: "$3,950",
+        style: "Dress",
+        strap: "Leather",
+        range: "under-4000",
+        image: "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?auto=format&fit=crop&w=1200&q=85",
+        description: "Warm cream, clean markers, and a case profile made for understated luxury.",
+        materials: "Stainless steel, domed sapphire, Italian leather",
+        movement: "Manual-wind mechanical movement",
+        water: "30m water resistance"
+      }
+    ];
+
+    let selectedProduct = products[0];
+
+    function productCard(product) {
+      return `
+        <article class="product-card fade-in">
+          <div class="product-image">
+            <img src="${product.image}" alt="${product.name}">
+            <span class="tag">${product.style}</span>
+          </div>
+          <div class="product-content">
+            <div class="product-title-row">
+              <h3>${product.name}</h3>
+              <div class="price">${product.price}</div>
+            </div>
+            <p>${product.description}</p>
+            <div class="card-actions">
+              <button class="btn btn-teal" onclick="alert('Added ${product.name} to cart')">Add to Cart</button>
+              <button class="btn" style="border:1px solid rgba(22,63,61,0.18); background:transparent; color:var(--teal);" onclick="openProduct(${product.id})">View</button>
+            </div>
+          </div>
+        </article>
+      `;
+    }
+
+    function renderFeatured() {
+      document.getElementById('featuredProducts').innerHTML = products.map(productCard).join('');
+    }
+
+    function renderShop() {
+      const price = document.getElementById('priceFilter')?.value || 'All';
+      const style = document.getElementById('styleFilter')?.value || 'All';
+      const strap = document.getElementById('strapFilter')?.value || 'All';
+      const filtered = products.filter(p =>
+        (price === 'All' || p.range === price) &&
+        (style === 'All' || p.style === style) &&
+        (strap === 'All' || p.strap === strap)
+      );
+      document.getElementById('shopProducts').innerHTML = filtered.map(productCard).join('') || '<p>No watches match your filters.</p>';
+    }
+
+    function openProduct(id) {
+      selectedProduct = products.find(p => p.id === id) || products[0];
+      document.getElementById('productMainImage').src = selectedProduct.image;
+      document.getElementById('thumbOne').src = selectedProduct.image;
+      document.getElementById('productStyle').textContent = selectedProduct.style + ' Collection';
+      document.getElementById('productName').textContent = selectedProduct.name;
+      document.getElementById('productPrice').textContent = selectedProduct.price;
+      document.getElementById('productDescription').textContent = selectedProduct.description + ' Built for the individual who values elegance without excess.';
+      document.getElementById('productSpecs').innerHTML = `
+        <div class="spec"><strong>Materials</strong><span>${selectedProduct.materials}</span></div>
+        <div class="spec"><strong>Movement</strong><span>${selectedProduct.movement}</span></div>
+        <div class="spec"><strong>Water Resistance</strong><span>${selectedProduct.water}</span></div>
+        <div class="spec"><strong>Warranty</strong><span>5-year international care promise</span></div>
+      `;
+      showPage('product');
+    }
+
+    function showPage(pageId) {
+      document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+      document.getElementById(pageId).classList.add('active');
+      document.getElementById('nav').classList.remove('mobile-open');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (pageId === 'shop') renderShop();
+      if (pageId === 'product') openProduct(selectedProduct.id);
+    }
+
+    function toggleMenu() {
+      document.getElementById('nav').classList.toggle('mobile-open');
+    }
+
+    renderFeatured();
+    renderShop();
+    openProduct(1);
+    showPage('home');
+  </script>
+</body>
+</html>
